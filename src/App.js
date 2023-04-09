@@ -1,24 +1,25 @@
-import logo from './logo.svg';
+import { createRoot } from 'react-dom/client'
+import { Suspense, useState } from 'react'
 import './App.css';
 
+import Overlay from './layout/Overlay'
+import { FadeIn, LeftMiddle, BottomLeft } from './layout/styles'
+
+import Bananas from './Bananas'
+
 function App() {
+  const [speed, set] = useState(1)
   return (
-    <div className="App">
-      <header className="App-header">
-        <img src={logo} className="App-logo" alt="logo" />
-        <p>
-          Edit <code>src/App.js</code> and save to reload.
-        </p>
-        <a
-          className="App-link"
-          href="https://reactjs.org"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          Learn React
-        </a>
-      </header>
-    </div>
+    <>
+      <Suspense fallback={null}>
+        <Bananas speed={speed} />
+        <FadeIn />
+      </Suspense>
+      <Overlay />
+      <BottomLeft>
+        <input type="range" min="0" max="20" value={speed} step="1" onChange={(e) => set(e.target.value)} />
+      </BottomLeft>
+    </>
   );
 }
 
